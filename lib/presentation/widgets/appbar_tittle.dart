@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../constants/colors.dart';
 
-class BuildAppBarTittle extends StatelessWidget {
-  const BuildAppBarTittle({super.key});
+class AppBarTittle extends StatelessWidget {
+  const AppBarTittle({super.key});
 
   @override
   Widget build(BuildContext context) {

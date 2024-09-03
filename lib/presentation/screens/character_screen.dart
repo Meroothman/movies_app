@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import '../widgets/build_loaded_list.dart';
-import '../../business_logic/search_cubit/cubit/search_cubit.dart';
-import '../../constants/colors.dart';
+
 import '../../business_logic/character_cubit/character_cubit.dart';
-import '../widgets/build_appbar_tittle.dart';
+import '../../constants/colors.dart';
+import '../widgets/appbar_tittle.dart';
+import '../widgets/loaded_list.dart';
 import '../widgets/character_search_list.dart';
 
 class CharacterScreen extends StatelessWidget {
-  
   const CharacterScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final searchCubit = BlocProvider.of<SearchCubit>(context);
+    final searchCubit = BlocProvider.of<CharacterCubit>(context);
     final characterCubit = BlocProvider.of<CharacterCubit>(context);
     return Scaffold(
       backgroundColor: ColorsConstants.grey,
@@ -24,8 +22,8 @@ class CharacterScreen extends StatelessWidget {
             ? const BackButton(color: ColorsConstants.grey)
             : null,
         title: searchCubit.isSearching
-            ? const BuildSearchText()
-            : const BuildAppBarTittle(),
+            ? const SearchText()
+            : const AppBarTittle(),
         actions: searchCubit.isSearching
             ? [
                 IconButton(
@@ -42,12 +40,7 @@ class CharacterScreen extends StatelessWidget {
             : [
                 IconButton(
                   onPressed: () {
-                    searchCubit.startSearch();
-                    ModalRoute.of(context)!.addLocalHistoryEntry(
-                      LocalHistoryEntry(
-                        onRemove: searchCubit.stopSearch,
-                      ),
-                    );
+                    searchCubit.startSearch(context);
                   },
                   icon: const Icon(
                     Icons.search,
@@ -68,10 +61,12 @@ class CharacterScreen extends StatelessWidget {
             return BlocBuilder<CharacterCubit, CharacterState>(
               builder: (context, state) {
                 characterCubit.getAllCharacters();
-                if (state is CharacterLoaded) {
-                  searchedCharacters = state.characters;
+                if (state is ListIsSearching && searchCubit.isSearching && searchTextController.text.isNotEmpty) {
+                  searchedCharacters = state.searchList;
+                  return const LoadedList();
+                } else if (state is CharacterLoaded) {
                   allCharacters = state.characters;
-                  return const BuildLoadedList();
+                  return const LoadedList();
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(
@@ -89,10 +84,13 @@ class CharacterScreen extends StatelessWidget {
         },
         child: BlocBuilder<CharacterCubit, CharacterState>(
           builder: (context, state) {
-            if (state is CharacterLoaded) {
-              allCharacters = state.characters;
-              return const BuildLoadedList();
-            } else {
+            if (state is ListIsSearching && searchCubit.isSearching && searchTextController.text.isNotEmpty) {
+                  searchedCharacters = state.searchList;
+                  return const LoadedList();
+                } else if (state is CharacterLoaded) {
+                  allCharacters = state.characters;
+                  return const LoadedList();
+                }else {
               return const Center(
                 child: CircularProgressIndicator(
                   color: ColorsConstants.yellow,
@@ -105,4 +103,3 @@ class CharacterScreen extends StatelessWidget {
     );
   }
 }
-

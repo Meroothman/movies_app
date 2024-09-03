@@ -5,8 +5,8 @@ import '../../business_logic/character_cubit/character_cubit.dart';
 import 'char_item.dart';
 import 'character_search_list.dart';
 
-class BuildCharactersList extends StatelessWidget {
-  const BuildCharactersList({super.key});
+class CharactersList extends StatelessWidget {
+  const CharactersList({super.key});
 
   @override
   Widget build(BuildContext context) {
