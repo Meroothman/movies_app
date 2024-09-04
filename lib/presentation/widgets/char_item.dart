@@ -20,7 +20,9 @@ class CharItem extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, characterDetailsScreen, arguments: characters);
+          FocusManager.instance.primaryFocus!.unfocus();
+          Navigator.pushNamed(context, characterDetailsScreen,
+              arguments: characters);
         },
         child: GridTile(
           footer: Hero(

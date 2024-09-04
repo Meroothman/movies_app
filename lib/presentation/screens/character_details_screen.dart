@@ -6,8 +6,7 @@ import '../../data/model/character_model.dart';
 
 class CharacterDetailsScreen extends StatelessWidget {
   final CharactersModel characters;
-  const CharacterDetailsScreen(CharactersModel character,
-      {super.key, required this.characters});
+  const CharacterDetailsScreen({super.key, required this.characters});
 
   @override
   Widget build(BuildContext context) {
@@ -118,35 +117,34 @@ class CharacterDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget animatedText( String text) {
+  Widget animatedText(String text) {
     return Center(
       child: DefaultTextStyle(
         style: const TextStyle(
-      fontSize: 20.0,
-      color: ColorsConstants.white,
-      fontWeight: FontWeight.bold,
-      shadows: [
-        Shadow(
-          blurRadius: 7.0,
-          color: ColorsConstants.yellow,
-          offset: Offset(0, 0),
-        ),
-      ]
-        ),
+            fontSize: 20.0,
+            color: ColorsConstants.white,
+            fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                blurRadius: 7.0,
+                color: ColorsConstants.yellow,
+                offset: Offset(0, 0),
+              ),
+            ]),
         child: AnimatedTextKit(
           repeatForever: true,
-      animatedTexts: [
-        WavyAnimatedText(
-          text,
-          textStyle: const TextStyle(
-            color: ColorsConstants.yellow,
-            fontWeight: FontWeight.bold,
-          ),
-          speed: const Duration(milliseconds: 100),
-        ),
-      ],
-      isRepeatingAnimation: true,
-      onTap: () {},
+          animatedTexts: [
+            WavyAnimatedText(
+              text,
+              textStyle: const TextStyle(
+                color: ColorsConstants.yellow,
+                fontWeight: FontWeight.bold,
+              ),
+              speed: const Duration(milliseconds: 100),
+            ),
+          ],
+          isRepeatingAnimation: true,
+          onTap: () {},
         ),
       ),
     );

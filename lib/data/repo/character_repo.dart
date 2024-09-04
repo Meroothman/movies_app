@@ -54,15 +54,10 @@ class CharactersRepo {
   CharactersRepo(this.apiServices);
 
   Future<List<CharactersModel>> getCharacters() async {
-    try {
-      final List<CharactersModel> characters = await apiServices.getAllCharacters();
-      //print(characters.toString());
-      //print("results of repo is ok");
-      return characters;
-    } catch (e) {
-      //print(e.toString());
-      //print("results of repo is not ok");
-      rethrow;
-    }
+    final List<CharactersModel> characters =
+        await apiServices.getAllCharacters();
+    //print(characters.toString());
+    //print("results of repo is ok");
+    return characters;
   }
 }

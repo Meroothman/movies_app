@@ -6,7 +6,6 @@ import 'business_logic/character_cubit/character_cubit.dart';
 import 'data/repo/character_repo.dart';
 import 'data/services/api_services.dart';
 
-
 void main() {
   runApp(MovieApp());
 }
@@ -18,7 +17,8 @@ class MovieApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-          create: (context) => CharacterCubit(CharactersRepo(ApiServices())),
+      create: (context) =>
+          CharacterCubit(CharactersRepo(ApiServices()))..getAllCharacters(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: appRouters.generateRoute,

@@ -1,41 +1,43 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../business_logic/character_cubit/character_cubit.dart';
+
 import '../../constants/colors.dart';
-import '../../data/model/character_model.dart';
 
-
-late List<CharactersModel> searchedCharacters;
-late List<CharactersModel> allCharacters;
 final searchTextController = TextEditingController();
+
 class SearchText extends StatelessWidget {
-  const SearchText({super.key});
-  
+  const SearchText({
+    super.key,
+    required this.onChange,
+    this.focusNode,
+  });
+
+  final Function(String? value) onChange;
+  final FocusNode? focusNode;
   @override
   Widget build(BuildContext context) {
     return Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 16,
+      ),
+      decoration: BoxDecoration(
+        color: ColorsConstants.yellow,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: TextField(
+        focusNode: focusNode,
+        controller: searchTextController,
+        cursorColor: ColorsConstants.grey,
+        decoration: const InputDecoration(
+          hintText: 'Find your character',
+          border: InputBorder.none,
+          hintStyle: TextStyle(
+            color: ColorsConstants.grey,
           ),
-          decoration: BoxDecoration(
-            color: ColorsConstants.yellow,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: TextField(
-            controller: searchTextController,
-            cursorColor: ColorsConstants.grey,
-            decoration: const InputDecoration(
-              hintText: 'Find your character',
-              border: InputBorder.none,
-              hintStyle: TextStyle(
-                color: ColorsConstants.grey,
-              ),
-            ),
-            onChanged: (searchCharacter) {
-              BlocProvider.of<CharacterCubit>(context).addSearchToList(searchCharacter);
-            },
-          ),
-        );
+        ),
+        onChanged: onChange,
+      ),
+    );
   }
 }
