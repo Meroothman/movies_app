@@ -10,20 +10,10 @@ late List<CharactersModel> allCharacters;
 final searchTextController = TextEditingController();
 class SearchText extends StatelessWidget {
   const SearchText({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
- 
-    return BlocBuilder<CharacterCubit, CharacterState>(
-      builder: (context, state) {
-        if (state is ListIsSearching  && searchTextController.text.isNotEmpty) {
-          searchedCharacters = state.searchList;
-        }
-        else if (state is ClearSearchState) {
-          searchTextController.clear();
-        }
-      
-        return Container(
+    return Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 16,
@@ -47,7 +37,5 @@ class SearchText extends StatelessWidget {
             },
           ),
         );
-      },
-    );
   }
 }
